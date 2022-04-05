@@ -67,19 +67,16 @@ public class ReportUtils {
      * @return StreamResource with the generated pdf report
      */
     private StreamResource createPdfResource(final List beanCollection, final String templatePath, String reportFileName) {
-        return new StreamResource(new StreamResource.StreamSource() {
-            @Override
-            public InputStream getStream () {
-                ByteArrayOutputStream pdfBuffer = new ByteArrayOutputStream();
-
-                try {
-                    executeReport(templatePath, beanCollection, pdfBuffer);
-                } catch (JRException e) {
-                    e.printStackTrace();
-                }
-                // Return a stream from the buffer.
-                return new ByteArrayInputStream(pdfBuffer.toByteArray());
+        return new StreamResource(() -> {
+            ByteArrayOutputStream pdfBuffer = new ByteArrayOutputStream();
+            
+            try {
+                executeReport(templatePath, beanCollection, pdfBuffer);
+            } catch (JRException e) {
+                e.printStackTrace();
             }
+            // Return a stream from the buffer.
+            return new ByteArrayInputStream(pdfBuffer.toByteArray());
         }, reportFileName);
     }
     

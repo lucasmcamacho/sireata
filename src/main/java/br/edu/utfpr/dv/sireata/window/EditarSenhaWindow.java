@@ -9,28 +9,25 @@ import com.vaadin.ui.PasswordField;
 import br.edu.utfpr.dv.sireata.Session;
 import br.edu.utfpr.dv.sireata.bo.UsuarioBO;
 import br.edu.utfpr.dv.sireata.model.Usuario;
+import com.vaadin.ui.Component;
+import java.util.Arrays;
+import java.util.List;
 
 public class EditarSenhaWindow extends EditarWindow {
 	
-	private final PasswordField tfSenhaAtual;
-	private final PasswordField tfNovaSenha;
-	private final PasswordField tfConfirmacaoSenha;
+	private final PasswordField tfSenhaAtual = new PasswordField("Senha Atual");
+	private final PasswordField tfNovaSenha = new PasswordField("Nova Senha");
+	private final PasswordField tfConfirmacaoSenha = new PasswordField("Confirmação de Senha");
 	
 	public EditarSenhaWindow(){
 		super("Alterar Senha", null);
-		
-		this.tfSenhaAtual = new PasswordField("Senha Atual");
-		this.tfSenhaAtual.setWidth("400px");
-		
-		this.tfNovaSenha = new PasswordField("Nova Senha");
-		this.tfNovaSenha.setWidth("400px");
-		
-		this.tfConfirmacaoSenha = new PasswordField("Confirmação de Senha");
+
+		this.tfSenhaAtual.setWidth("400px");		
+		this.tfNovaSenha.setWidth("400px");		
 		this.tfConfirmacaoSenha.setWidth("400px");
 		
-		this.adicionarCampo(this.tfSenhaAtual);
-		this.adicionarCampo(this.tfNovaSenha);
-		this.adicionarCampo(this.tfConfirmacaoSenha);
+                List<Component> componentList = Arrays.asList( this.tfSenhaAtual, this.tfNovaSenha, this.tfConfirmacaoSenha );   
+		this.addCampo(componentList);
 		
 		this.tfSenhaAtual.focus();
 	}

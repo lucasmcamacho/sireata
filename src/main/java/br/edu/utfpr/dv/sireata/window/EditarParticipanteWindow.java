@@ -10,6 +10,9 @@ import com.vaadin.ui.TextField;
 import br.edu.utfpr.dv.sireata.bo.AtaParticipanteBO;
 import br.edu.utfpr.dv.sireata.component.ComboUsuario;
 import br.edu.utfpr.dv.sireata.model.AtaParticipante;
+import com.vaadin.ui.Component;
+import java.util.Arrays;
+import java.util.List;
 
 public class EditarParticipanteWindow extends EditarWindow {
 
@@ -17,10 +20,10 @@ public class EditarParticipanteWindow extends EditarWindow {
 	private final EditarAtaWindow parentWindow;
 	
 	private final ComboUsuario cbUsuario;
-	private final TextField tfDesignacao;
-	private final CheckBox cbPresente;
-	private final TextField tfMotivo;
-	private final CheckBox cbMembro;
+	private final TextField tfDesignacao = new TextField("Designação");
+	private final CheckBox cbPresente = new CheckBox("Presente");
+	private final TextField tfMotivo = new TextField("Motivo da Ausência");
+	private final CheckBox cbMembro = new CheckBox("Membro do órgão");
 	
 	public EditarParticipanteWindow(AtaParticipante participante, EditarAtaWindow parentWindow){
 		super("Editar Participante", null);
@@ -35,22 +38,13 @@ public class EditarParticipanteWindow extends EditarWindow {
 		
 		this.cbUsuario = new ComboUsuario("Participante");
 		this.cbUsuario.setWidth("400px");
-		
-		this.tfDesignacao = new TextField("Designação");
+
 		this.tfDesignacao.setWidth("400px");
-		
-		this.cbPresente = new CheckBox("Presente");
-		
-		this.cbMembro = new CheckBox("Membro do órgão");
-		
-		this.tfMotivo = new TextField("Motivo da Ausência");
+
 		this.tfMotivo.setWidth("400px");
 		
-		this.adicionarCampo(this.cbUsuario);
-		this.adicionarCampo(this.tfDesignacao);
-		this.adicionarCampo(this.cbMembro);
-		this.adicionarCampo(this.cbPresente);
-		this.adicionarCampo(this.tfMotivo);
+                List<Component> componentList = Arrays.asList( this.cbUsuario, this.tfDesignacao, this.cbMembro, this.cbPresente, this.tfMotivo );   
+		this.addCampo(componentList);
 		
 		this.carregarParticipante();
 	}

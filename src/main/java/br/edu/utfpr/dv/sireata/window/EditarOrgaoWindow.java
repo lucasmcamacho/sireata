@@ -28,6 +28,7 @@ import br.edu.utfpr.dv.sireata.model.Campus;
 import br.edu.utfpr.dv.sireata.model.Orgao;
 import br.edu.utfpr.dv.sireata.model.OrgaoMembro;
 import br.edu.utfpr.dv.sireata.view.ListView;
+import java.util.Arrays;
 
 public class EditarOrgaoWindow extends EditarWindow {
 	
@@ -64,12 +65,9 @@ public class EditarOrgaoWindow extends EditarWindow {
 		this.cbDepartamento = new ComboDepartamento(this.cbCampus.getCampus().getIdCampus(), TipoFiltro.NENHUM);
 		this.cbDepartamento.setWidth("400px");
 		
-		this.cbCampus.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				cbDepartamento.setIdCampus(cbCampus.getCampus().getIdCampus());
-			}
-		});
+		this.cbCampus.addValueChangeListener((ValueChangeEvent event) -> {
+                    cbDepartamento.setIdCampus(cbCampus.getCampus().getIdCampus());
+                });
 		
 		this.tfNome = new TextField("Nome");
 		this.tfNome.setWidth("810px");
@@ -117,32 +115,23 @@ public class EditarOrgaoWindow extends EditarWindow {
 		this.vlGrid = new VerticalLayout();
 		this.vlGrid.setSpacing(true);
 		
-		this.btAdicionarMembro = new Button("Adicionar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	adicionarMembro();
-            }
-        });
+		this.btAdicionarMembro = new Button("Adicionar", (ClickEvent event) -> {
+                    adicionarMembro();
+                });
 		this.btAdicionarMembro.setIcon(FontAwesome.PLUS);
 		this.btAdicionarMembro.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		this.btAdicionarMembro.setWidth("150px");
 		
-		this.btEditarMembro = new Button("Editar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	editarMembro();
-            }
-        });
+		this.btEditarMembro = new Button("Editar", (ClickEvent event) -> {
+                    editarMembro();
+                });
 		this.btEditarMembro.setIcon(FontAwesome.EDIT);
 		this.btEditarMembro.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		this.btEditarMembro.setWidth("150px");
 		
-		this.btRemoverMembro = new Button("Remover", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	removerMembro();
-            }
-        });
+		this.btRemoverMembro = new Button("Remover", (ClickEvent event) -> {
+                    removerMembro();
+                });
 		this.btRemoverMembro.setIcon(FontAwesome.TRASH);
 		this.btRemoverMembro.addStyleName(ValoTheme.BUTTON_DANGER);
 		this.btRemoverMembro.setWidth("150px");
@@ -155,7 +144,7 @@ public class EditarOrgaoWindow extends EditarWindow {
 		
 		this.tab.addTab(tab2, "Membros");
 		
-		this.adicionarCampo(this.tab);
+		this.addCampo( Arrays.asList( this.tab));
 		
 		this.carregarOrgao();
 	}

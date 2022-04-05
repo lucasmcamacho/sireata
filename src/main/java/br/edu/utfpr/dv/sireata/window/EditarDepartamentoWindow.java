@@ -26,6 +26,9 @@ import br.edu.utfpr.dv.sireata.component.ComboCampus;
 import br.edu.utfpr.dv.sireata.component.ComboCampus.TipoFiltro;
 import br.edu.utfpr.dv.sireata.model.Departamento;
 import br.edu.utfpr.dv.sireata.view.ListView;
+import com.vaadin.ui.Component;
+import java.util.Arrays;
+import java.util.List;
 
 public class EditarDepartamentoWindow extends EditarWindow {
 	
@@ -75,11 +78,8 @@ public class EditarDepartamentoWindow extends EditarWindow {
 		this.imLogo.setWidth("400px");
 		this.imLogo.setHeight("200px");
 		
-		this.adicionarCampo(new HorizontalLayout(this.tfNome, this.cbCampus));
-		this.adicionarCampo(this.tfNomeCompleto);
-		this.adicionarCampo(this.tfSite);
-		this.adicionarCampo(this.cbAtivo);
-		this.adicionarCampo(new HorizontalLayout(this.upLogo, this.imLogo));
+                List<Component> componentList = Arrays.asList( this.tfNomeCompleto, this.tfSite, this.cbAtivo, new HorizontalLayout(this.upLogo, this.imLogo), new HorizontalLayout(this.tfNome, this.cbCampus) );   
+		this.addCampo(componentList);
 		
 		this.carregarDepartamento();
 		this.tfNome.focus();
@@ -102,12 +102,7 @@ public class EditarDepartamentoWindow extends EditarWindow {
 	private void carregarLogo(){
 		if(this.departamento.getLogo() != null){
 			StreamResource resource = new StreamResource(
-	            new StreamResource.StreamSource() {
-	                @Override
-	                public InputStream getStream() {
-	                    return new ByteArrayInputStream(departamento.getLogo());
-	                }
-	            }, "filename.png");
+	                () -> new ByteArrayInputStream(departamento.getLogo()), "filename.png");
 	
 		    this.imLogo.setSource(resource);
 		}

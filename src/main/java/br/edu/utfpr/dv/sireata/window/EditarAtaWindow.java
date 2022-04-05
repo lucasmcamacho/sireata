@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Button;
@@ -51,6 +50,8 @@ import br.edu.utfpr.dv.sireata.model.AtaReport;
 import br.edu.utfpr.dv.sireata.model.Usuario;
 import br.edu.utfpr.dv.sireata.util.DateUtils;
 import br.edu.utfpr.dv.sireata.view.ListView;
+import com.vaadin.ui.Component;
+import java.util.Arrays;
 
 public class EditarAtaWindow extends EditarWindow {
 	
@@ -117,12 +118,9 @@ public class EditarAtaWindow extends EditarWindow {
 		this.dfData.setDateFormat("dd/MM/yyyy HH:mm");
 		this.dfData.setValue(this.ata.getData());
 		this.dfData.setResolution(Resolution.MINUTE);
-		this.dfData.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				carregarNumeroAta();
-			}
-		});
+		this.dfData.addValueChangeListener((ValueChangeEvent event) -> {
+                    carregarNumeroAta();
+                });
 		
 		this.cbCampus = new ComboCampus(tipoFiltro);
 		this.cbCampus.setWidth("400px");
@@ -130,37 +128,28 @@ public class EditarAtaWindow extends EditarWindow {
 		this.cbDepartamento = new ComboDepartamento(this.cbCampus.getCampus().getIdCampus(), tipoFiltro);
 		this.cbDepartamento.setWidth("400px");
 		
-		this.cbCampus.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				cbDepartamento.setIdCampus(cbCampus.getCampus().getIdCampus());
-				carregarNumeroAta();
-				carregarPresidenteSecretario();
-				carregarMembrosOrgao();
-			}
-		});
+		this.cbCampus.addValueChangeListener((ValueChangeEvent event) -> {
+                    cbDepartamento.setIdCampus(cbCampus.getCampus().getIdCampus());
+                    carregarNumeroAta();
+                    carregarPresidenteSecretario();
+                    carregarMembrosOrgao();
+                });
 		
 		this.cbOrgao = new ComboOrgao(this.cbDepartamento.getDepartamento().getIdDepartamento(), tipoFiltro);
 		this.cbOrgao.setWidth("400px");
 		
-		this.cbDepartamento.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				cbOrgao.setIdDepartamento(cbDepartamento.getDepartamento().getIdDepartamento());
-				carregarNumeroAta();
-				carregarPresidenteSecretario();
-				carregarMembrosOrgao();
-			}
-		});
+		this.cbDepartamento.addValueChangeListener((ValueChangeEvent event) -> {
+                    cbOrgao.setIdDepartamento(cbDepartamento.getDepartamento().getIdDepartamento());
+                    carregarNumeroAta();
+                    carregarPresidenteSecretario();
+                    carregarMembrosOrgao();
+                });
 		
-		this.cbOrgao.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				carregarNumeroAta();
-				carregarPresidenteSecretario();
-				carregarMembrosOrgao();
-			}
-		});
+		this.cbOrgao.addValueChangeListener((ValueChangeEvent event) -> {
+                    carregarNumeroAta();
+                    carregarPresidenteSecretario();
+                    carregarMembrosOrgao();
+                });
 		
 		this.cbTipo = new NativeSelect("Tipo de Reunião");
 		this.cbTipo.setWidth("400px");
@@ -168,12 +157,9 @@ public class EditarAtaWindow extends EditarWindow {
 		this.cbTipo.addItem(TipoAta.EXTRAORDINARIA);
 		this.cbTipo.setValue(TipoAta.ORDINARIA);
 		this.cbTipo.setNullSelectionAllowed(false);
-		this.cbTipo.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				carregarNumeroAta();
-			}
-		});
+		this.cbTipo.addValueChangeListener((ValueChangeEvent event) -> {
+                    carregarNumeroAta();
+                });
 		
 		this.cbPresidente = new ComboUsuario("Presidente");
 		this.cbPresidente.setWidth("400px");
@@ -223,51 +209,36 @@ public class EditarAtaWindow extends EditarWindow {
 		this.vlGridPauta = new VerticalLayout();
 		this.vlGridPauta.setSpacing(true);
 		
-		this.btAdicionarPauta = new Button("Adicionar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	adicionarPauta();
-            }
-        });
+		this.btAdicionarPauta = new Button("Adicionar", (ClickEvent event) -> {
+                    adicionarPauta();
+                });
 		this.btAdicionarPauta.setIcon(FontAwesome.PLUS);
 		this.btAdicionarPauta.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		this.btAdicionarPauta.setWidth("150px");
 		
-		this.btEditarPauta = new Button("Editar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	editarPauta();
-            }
-        });
+		this.btEditarPauta = new Button("Editar", (ClickEvent event) -> {
+                    editarPauta();
+                });
 		this.btEditarPauta.setIcon(FontAwesome.EDIT);
 		this.btEditarPauta.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		this.btEditarPauta.setWidth("150px");
 		
-		this.btRemoverPauta = new Button("Remover", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	removerPauta();
-            }
-        });
+		this.btRemoverPauta = new Button("Remover", (ClickEvent event) -> {
+                    removerPauta();
+                });
 		this.btRemoverPauta.setIcon(FontAwesome.TRASH);
 		this.btRemoverPauta.addStyleName(ValoTheme.BUTTON_DANGER);
 		this.btRemoverPauta.setWidth("150px");
 		
-		this.btPautaAcima = new Button("Para Cima", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	moverPautaAcima();
-            }
-        });
+		this.btPautaAcima = new Button("Para Cima", (ClickEvent event) -> {
+                    moverPautaAcima();
+                });
 		this.btPautaAcima.setIcon(FontAwesome.ARROW_UP);
 		this.btPautaAcima.setWidth("150px");
 		
-		this.btPautaAbaixo = new Button("Para Baixo", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	moverPautaAbaixo();
-            }
-        });
+		this.btPautaAbaixo = new Button("Para Baixo", (ClickEvent event) -> {
+                    moverPautaAbaixo();
+                });
 		this.btPautaAbaixo.setIcon(FontAwesome.ARROW_DOWN);
 		this.btPautaAbaixo.setWidth("150px");
 		
@@ -282,32 +253,23 @@ public class EditarAtaWindow extends EditarWindow {
 		this.vlGridParticipantes = new VerticalLayout();
 		this.vlGridParticipantes.setSpacing(true);
 		
-		this.btAdicionarParticipante = new Button("Adicionar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	adicionarParticipante();
-            }
-        });
+		this.btAdicionarParticipante = new Button("Adicionar", (ClickEvent event) -> {
+                    adicionarParticipante();
+                });
 		this.btAdicionarParticipante.setIcon(FontAwesome.PLUS);
 		this.btAdicionarParticipante.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		this.btAdicionarParticipante.setWidth("150px");
 		
-		this.btEditarParticipante = new Button("Editar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	editarParticipante();
-            }
-        });
+		this.btEditarParticipante = new Button("Editar", (ClickEvent event) -> {
+                    editarParticipante();
+                });
 		this.btEditarParticipante.setIcon(FontAwesome.EDIT);
 		this.btEditarParticipante.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		this.btEditarParticipante.setWidth("150px");
 		
-		this.btRemoverParticipante = new Button("Remover", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	removerParticipante();
-            }
-        });
+		this.btRemoverParticipante = new Button("Remover", (ClickEvent event) -> {
+                    removerParticipante();
+                });
 		this.btRemoverParticipante.setIcon(FontAwesome.TRASH);
 		this.btRemoverParticipante.addStyleName(ValoTheme.BUTTON_DANGER);
 		this.btRemoverParticipante.setWidth("150px");
@@ -320,65 +282,47 @@ public class EditarAtaWindow extends EditarWindow {
 		
 		this.tab.addTab(tab3, "Participantes");
 		
-		this.adicionarCampo(this.tab);
+		this.addCampo(Arrays.asList(this.tab));
 		
 		this.vlGridAnexos = new VerticalLayout();
 		this.vlGridAnexos.setSpacing(true);
 		
-		this.btVisualizarAnexo = new Button("Visualizar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	visualizarAnexo();
-            }
-        });
+		this.btVisualizarAnexo = new Button("Visualizar", (ClickEvent event) -> {
+                    visualizarAnexo();
+                });
 		this.btVisualizarAnexo.setIcon(FontAwesome.DOWNLOAD);
 		this.btVisualizarAnexo.setWidth("125px");
 		
-		this.btAdicionarAnexo = new Button("Adicionar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	adicionarAnexo();
-            }
-        });
+		this.btAdicionarAnexo = new Button("Adicionar", (ClickEvent event) -> {
+                    adicionarAnexo();
+                });
 		this.btAdicionarAnexo.setIcon(FontAwesome.PLUS);
 		this.btAdicionarAnexo.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		this.btAdicionarAnexo.setWidth("125px");
 		
-		this.btEditarAnexo = new Button("Editar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	editarAnexo();
-            }
-        });
+		this.btEditarAnexo = new Button("Editar", (ClickEvent event) -> {
+                    editarAnexo();
+                });
 		this.btEditarAnexo.setIcon(FontAwesome.EDIT);
 		this.btEditarAnexo.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		this.btEditarAnexo.setWidth("125px");
 		
-		this.btRemoverAnexo = new Button("Remover", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	removerAnexo();
-            }
-        });
+		this.btRemoverAnexo = new Button("Remover", (ClickEvent event) -> {
+                    removerAnexo();
+                });
 		this.btRemoverAnexo.setIcon(FontAwesome.TRASH);
 		this.btRemoverAnexo.addStyleName(ValoTheme.BUTTON_DANGER);
 		this.btRemoverAnexo.setWidth("125px");
 		
-		this.btMoverAnexoAcima = new Button("Para Cima", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	moverAnexoAcima();
-            }
-        });
+		this.btMoverAnexoAcima = new Button("Para Cima", (ClickEvent event) -> {
+                    moverAnexoAcima();
+                });
 		this.btMoverAnexoAcima.setIcon(FontAwesome.ARROW_UP);
 		this.btMoverAnexoAcima.setWidth("125px");
 		
-		this.btMoverAnexoAbaixo = new Button("Para Baixo", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	moverAnexoAbaixo();
-            }
-        });
+		this.btMoverAnexoAbaixo = new Button("Para Baixo", (ClickEvent event) -> {
+                    moverAnexoAbaixo();
+                });
 		this.btMoverAnexoAbaixo.setIcon(FontAwesome.ARROW_DOWN);
 		this.btMoverAnexoAbaixo.setWidth("125px");
 		
@@ -390,41 +334,27 @@ public class EditarAtaWindow extends EditarWindow {
 		
 		this.tab.addTab(tab4, "Anexos");
 		
-		this.btLiberarComentarios = new Button("Liberar Comentários", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	liberarComentarios();
-            }
-        });
+		this.btLiberarComentarios = new Button("Liberar Comentários", (ClickEvent event) -> {
+                    liberarComentarios();
+                });
 		this.btLiberarComentarios.setIcon(FontAwesome.UNLOCK);
 		
-		this.btBloquearComentarios = new Button("Bloquear Comentários", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	bloquearComentarios();
-            }
-        });
+		this.btBloquearComentarios = new Button("Bloquear Comentários", (ClickEvent event) -> {
+                    bloquearComentarios();
+                });
 		this.btBloquearComentarios.setIcon(FontAwesome.LOCK);
 		
-		this.btPublicar = new Button("Publicar Ata", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	publicarAta();
-            }
-        });
+		this.btPublicar = new Button("Publicar Ata", (ClickEvent event) -> {
+                    publicarAta();
+                });
 		
-		this.btVisualizar = new Button("Visualizar Ata", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	visualizarAta();
-            }
-        });
+		this.btVisualizar = new Button("Visualizar Ata", (ClickEvent event) -> {
+                    visualizarAta();
+                });
 		this.btVisualizar.setIcon(FontAwesome.SEARCH);
 		
-		this.adicionarBotao(this.btLiberarComentarios);
-		this.adicionarBotao(this.btBloquearComentarios);
-		this.adicionarBotao(this.btVisualizar);
-		this.adicionarBotao(this.btPublicar);
+                List<Component> componentList = Arrays.asList( this.btLiberarComentarios, this.btBloquearComentarios, this.btVisualizar, this.btPublicar);   
+		this.adicionarBotao(componentList);
 		
 		this.btLiberarComentarios.setWidth("250px");
 		this.btBloquearComentarios.setWidth("250px");
@@ -760,29 +690,27 @@ public class EditarAtaWindow extends EditarWindow {
 		if(index == -1){
     		Notification.show("Remover Participante", "Selecione o participante para remover.", Notification.Type.WARNING_MESSAGE);
     	}else{
-    		ConfirmDialog.show(UI.getCurrent(), "Confirma a exclusão do registro?", new ConfirmDialog.Listener() {
-                public void onClose(ConfirmDialog dialog) {
+    		ConfirmDialog.show(UI.getCurrent(), "Confirma a exclusão do registro?", (ConfirmDialog dialog) -> {
                     if (dialog.isConfirmed()) {
-                    	try {
-                    		AtaParticipante participante = ata.getParticipantes().get(index);
-                    		
-                			if(participante.getIdAtaParticipante() > 0){
-	                			AtaParticipanteBO bo = new AtaParticipanteBO();
-	                			
-								bo.excluir(participante);
-                			}
-                        	
-                        	ata.getParticipantes().remove(index);
-                        	
-                        	carregarParticipantes();
-						} catch (Exception e) {
-							Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-							
-							Notification.show("Remover Participante", e.getMessage(), Notification.Type.ERROR_MESSAGE);
-						}
+                        try {
+                            AtaParticipante participante = ata.getParticipantes().get(index);
+                            
+                            if(participante.getIdAtaParticipante() > 0){
+                                AtaParticipanteBO bo = new AtaParticipanteBO();
+                                
+                                bo.excluir(participante);
+                            }
+                            
+                            ata.getParticipantes().remove(index);
+                            
+                            carregarParticipantes();
+                        } catch (Exception e) {
+                            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+                            
+                            Notification.show("Remover Participante", e.getMessage(), Notification.Type.ERROR_MESSAGE);
+                        }
                     }
-                }
-            });
+                    });
     	}
 	}
 	
@@ -855,29 +783,27 @@ public class EditarAtaWindow extends EditarWindow {
 		if(index == -1){
     		Notification.show("Remover Anexo", "Selecione o anexo para remover.", Notification.Type.WARNING_MESSAGE);
     	}else{
-    		ConfirmDialog.show(UI.getCurrent(), "Confirma a exclusão do registro?", new ConfirmDialog.Listener() {
-                public void onClose(ConfirmDialog dialog) {
+    		ConfirmDialog.show(UI.getCurrent(), "Confirma a exclusão do registro?", (ConfirmDialog dialog) -> {
                     if (dialog.isConfirmed()) {
-                    	try {
-                    		Anexo anexo = ata.getAnexos().get(index);
-                    		
-                			if(anexo.getIdAnexo() > 0){
-	                			AnexoBO bo = new AnexoBO();
-	                			
-								bo.excluir(anexo);
-                			}
-                        	
-                        	ata.getAnexos().remove(index);
-                        	
-                        	carregarAnexos();
-						} catch (Exception e) {
-							Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-							
-							Notification.show("Remover Anexo", e.getMessage(), Notification.Type.ERROR_MESSAGE);
-						}
+                        try {
+                            Anexo anexo = ata.getAnexos().get(index);
+                            
+                            if(anexo.getIdAnexo() > 0){
+                                AnexoBO bo = new AnexoBO();
+                                
+                                bo.excluir(anexo);
+                            }
+                            
+                            ata.getAnexos().remove(index);
+                            
+                            carregarAnexos();
+                        } catch (Exception e) {
+                            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+                            
+                            Notification.show("Remover Anexo", e.getMessage(), Notification.Type.ERROR_MESSAGE);
+                        }
                     }
-                }
-            });
+                    });
     	}
 	}
 	
@@ -958,29 +884,27 @@ public class EditarAtaWindow extends EditarWindow {
 		if(index == -1){
     		Notification.show("Remover Pauta", "Selecione a pauta para remover.", Notification.Type.WARNING_MESSAGE);
     	}else{
-    		ConfirmDialog.show(UI.getCurrent(), "Confirma a exclusão do registro?", new ConfirmDialog.Listener() {
-                public void onClose(ConfirmDialog dialog) {
+    		ConfirmDialog.show(UI.getCurrent(), "Confirma a exclusão do registro?", (ConfirmDialog dialog) -> {
                     if (dialog.isConfirmed()) {
-                    	try {
-                    		Pauta pauta = ata.getPauta().get(index);
-                    		
-                			if(pauta.getIdPauta() > 0){
-	                			PautaBO bo = new PautaBO();
-	                			
-								bo.excluir(pauta);
-                			}
-                        	
-                        	ata.getPauta().remove(index);
-                        	
-                        	carregaPauta();
-						} catch (Exception e) {
-							Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-							
-							Notification.show("Remover Pauta", e.getMessage(), Notification.Type.ERROR_MESSAGE);
-						}
+                        try {
+                            Pauta pauta = ata.getPauta().get(index);
+                            
+                            if(pauta.getIdPauta() > 0){
+                                PautaBO bo = new PautaBO();
+                                
+                                bo.excluir(pauta);
+                            }
+                            
+                            ata.getPauta().remove(index);
+                            
+                            carregaPauta();
+                        } catch (Exception e) {
+                            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+                            
+                            Notification.show("Remover Pauta", e.getMessage(), Notification.Type.ERROR_MESSAGE);
+                        }
                     }
-                }
-            });
+                    });
     	}
 	}
 	
@@ -1070,26 +994,23 @@ public class EditarAtaWindow extends EditarWindow {
 	
 	private void publicarAta(){
 		try {
-			ConfirmDialog.show(UI.getCurrent(), "Confirma a publicação da ata? Esta ação não poderá ser revertida.", new ConfirmDialog.Listener() {
-                public void onClose(ConfirmDialog dialog) {
-                    if (dialog.isConfirmed()) {
-                    	try {
-                    		AtaBO bo = new AtaBO();
-                    		
-                    		bo.publicar(ata);
-                    		
-                    		Notification.show("Publicar Ata", "Ata publicada com sucesso.", Notification.Type.WARNING_MESSAGE);
-                    		
-                    		atualizarGridPai();
-                    		close();
-						} catch (Exception e) {
-							Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-							
-							Notification.show("Publicar Ata", e.getMessage(), Notification.Type.ERROR_MESSAGE);
-						}
-                    }
-                }
-            });
+			ConfirmDialog.show(UI.getCurrent(), "Confirma a publicação da ata? Esta ação não poderá ser revertida.", (ConfirmDialog dialog) -> {
+                            if (dialog.isConfirmed()) {
+                                try {
+                                    AtaBO bo = new AtaBO();
+                                    
+                                    bo.publicar(ata);
+                                    
+                                    Notification.show("Publicar Ata", "Ata publicada com sucesso.", Notification.Type.WARNING_MESSAGE);
+                                    
+                                    atualizarGridPai();
+                                    close();
+                                } catch (Exception e) {
+                                    Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+                                    
+                                    Notification.show("Publicar Ata", e.getMessage(), Notification.Type.ERROR_MESSAGE);
+                                }
+                            }   });
 		} catch (Exception e) {
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			

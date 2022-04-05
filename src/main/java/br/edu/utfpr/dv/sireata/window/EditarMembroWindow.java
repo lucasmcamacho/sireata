@@ -8,6 +8,9 @@ import com.vaadin.ui.TextField;
 
 import br.edu.utfpr.dv.sireata.component.ComboUsuario;
 import br.edu.utfpr.dv.sireata.model.OrgaoMembro;
+import com.vaadin.ui.Component;
+import java.util.Arrays;
+import java.util.List;
 
 public class EditarMembroWindow extends EditarWindow {
 	
@@ -34,8 +37,8 @@ public class EditarMembroWindow extends EditarWindow {
 		this.tfDesignacao = new TextField("Designação");
 		this.tfDesignacao.setWidth("400px");
 		
-		this.adicionarCampo(this.cbUsuario);
-		this.adicionarCampo(this.tfDesignacao);
+                List<Component> componentList = Arrays.asList( this.cbUsuario, this.tfDesignacao );   
+		this.addCampo(componentList);
 		
 		this.carregaMembro();
 	}

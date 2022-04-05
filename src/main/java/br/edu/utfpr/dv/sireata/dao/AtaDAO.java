@@ -40,12 +40,7 @@ public class AtaDAO {
 				return null;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -77,12 +72,7 @@ public class AtaDAO {
 				return null;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -112,12 +102,7 @@ public class AtaDAO {
 				return null;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -143,12 +128,7 @@ public class AtaDAO {
 				return 1;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -182,12 +162,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -215,12 +190,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -248,12 +218,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -281,12 +246,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -314,12 +274,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -348,12 +303,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -382,12 +332,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -416,12 +361,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -450,12 +390,7 @@ public class AtaDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -506,12 +441,7 @@ public class AtaDAO {
 			
 			return ata.getIdAta();
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -529,10 +459,7 @@ public class AtaDAO {
 			
 			stmt.execute();
 		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, null);
 		}
 	}
 	
@@ -546,10 +473,7 @@ public class AtaDAO {
 		
 			stmt.execute("UPDATE atas SET aceitarComentarios=1 WHERE publicada=0 AND idAta=" + String.valueOf(idAta));
 		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, null);
 		}
 	}
 	
@@ -563,10 +487,7 @@ public class AtaDAO {
 		
 			stmt.execute("UPDATE atas SET aceitarComentarios=0 WHERE idAta=" + String.valueOf(idAta));
 		}finally{
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, null);
 		}
 	}
 	
@@ -615,12 +536,7 @@ public class AtaDAO {
 				return false;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -638,12 +554,7 @@ public class AtaDAO {
 		
 			return rs.next();
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -661,12 +572,7 @@ public class AtaDAO {
 		
 			return rs.next();
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -688,12 +594,7 @@ public class AtaDAO {
 				return false;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -720,11 +621,17 @@ public class AtaDAO {
 			throw ex;
 		}finally{
 			conn.setAutoCommit(true);
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, null);
 		}
 	}
+        
+        public void verifyFinally(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
+            if((rs != null) && !rs.isClosed())
+                rs.close();
+            if((stmt != null) && !stmt.isClosed())
+                 stmt.close();
+            if((conn != null) && !conn.isClosed())
+                 conn.close();
+        }
 
 }

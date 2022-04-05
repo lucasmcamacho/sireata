@@ -13,9 +13,12 @@ import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
+import com.vaadin.ui.Component;
+import java.util.List;
 
 import br.edu.utfpr.dv.sireata.bo.AnexoBO;
 import br.edu.utfpr.dv.sireata.model.Anexo;
+import java.util.Arrays;
 
 public class EditarAnexoWindow extends EditarWindow {
 
@@ -46,8 +49,8 @@ public class EditarAnexoWindow extends EditarWindow {
 		this.uploadArquivo.setButtonCaption("Enviar Arquivo");
 		this.uploadArquivo.setImmediate(true);
 		
-		this.adicionarCampo(this.textDescricao);
-		this.adicionarCampo(this.uploadArquivo);
+                List<Component> componentList = Arrays.asList( this.textDescricao, this.uploadArquivo );                
+		this.addCampo(componentList);
 		
 		this.carregarAnexo();
 	}

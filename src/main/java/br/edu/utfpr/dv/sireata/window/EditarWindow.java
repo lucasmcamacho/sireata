@@ -16,6 +16,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
+import java.util.List;
 
 public abstract class EditarWindow extends Window {
 
@@ -29,12 +30,9 @@ public abstract class EditarWindow extends Window {
 		
 		this.parentView = parentView;
 		
-		this.btSalvar = new Button("Salvar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	salvar();
-            }
-        });
+		this.btSalvar = new Button("Salvar", (ClickEvent event) -> {
+                    salvar();
+                });
 		this.btSalvar.setIcon(FontAwesome.SAVE);
 		this.btSalvar.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		this.btSalvar.setWidth("150px");
@@ -78,19 +76,22 @@ public abstract class EditarWindow extends Window {
 		}
 	}
 	
-	public void adicionarCampo(Component c){
-		if(c instanceof HorizontalLayout){
+	public void addCampo(List<Component> item){
+                for(Component c : item){
+                    if(c instanceof HorizontalLayout){
 			((HorizontalLayout)c).setSpacing(true);
-		}else if(c instanceof VerticalLayout){
+                    }else if(c instanceof VerticalLayout){
 			((VerticalLayout)c).setSpacing(true);
-		}
-		
-		this.vlCampos.addComponent(c);
+                    }
+                    this.vlCampos.addComponent(c);
+                }         		
 	}
 	
-	public void adicionarBotao(Component c){
-		c.setWidth("150px");
+	public void adicionarBotao(List<Component> item){
+            for(Component c : item){
+                c.setWidth("150px");
 		this.hlBotoes.addComponent(c);
+            } 
 	}
 	
 	protected void showReport(byte[] pdfReport){

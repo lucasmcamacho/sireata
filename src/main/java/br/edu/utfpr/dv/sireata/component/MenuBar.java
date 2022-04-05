@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 
 import com.vaadin.ui.UI;
@@ -18,7 +17,6 @@ import br.edu.utfpr.dv.sireata.view.CampusView;
 import br.edu.utfpr.dv.sireata.view.DepartamentoView;
 import br.edu.utfpr.dv.sireata.view.LoginView;
 import br.edu.utfpr.dv.sireata.view.OrgaoView;
-import br.edu.utfpr.dv.sireata.view.UsuarioView;
 import br.edu.utfpr.dv.sireata.window.EditarAtaWindow;
 import br.edu.utfpr.dv.sireata.window.EditarSenhaWindow;
 import br.edu.utfpr.dv.sireata.window.EditarUsuarioWindow;
@@ -43,78 +41,45 @@ public class MenuBar extends CustomComponent {
 		
 		MenuItem modules = this.menu.addItem("Atas", null);
 		if(podeCriarAta){
-			modules.addItem("Nova Ata", new Command(){
-	    	    @Override
-	    	    public void menuSelected(MenuItem selectedItem){
-	    	    	UI.getCurrent().addWindow(new EditarAtaWindow(null, null));
-	    	    }
-	    	});
+			modules.addItem("Nova Ata", (MenuItem selectedItem) -> {
+                            UI.getCurrent().addWindow(new EditarAtaWindow(null, null));
+                        });
 		}
-		modules.addItem("Atas em Aberto", new Command(){
-    	    @Override
-    	    public void menuSelected(MenuItem selectedItem){
-    	        UI.getCurrent().getNavigator().navigateTo(AtaView.NAME + "/0");
-    	    }
-    	});
-		modules.addItem("Atas Publicadas", new Command(){
-    	    @Override
-    	    public void menuSelected(MenuItem selectedItem){
-    	    	UI.getCurrent().getNavigator().navigateTo(AtaView.NAME + "/1");
-    	    }
-    	});
+		modules.addItem("Atas em Aberto", (MenuItem selectedItem) -> {
+                    UI.getCurrent().getNavigator().navigateTo(AtaView.NAME + "/0");
+                });
+		modules.addItem("Atas Publicadas", (MenuItem selectedItem) -> {
+                    UI.getCurrent().getNavigator().navigateTo(AtaView.NAME + "/1");
+                });
 		
 		if(Session.isAdministrador()){
 			MenuItem administration = this.menu.addItem("Administração", null);
-			administration.addItem("Câmpus", new Command(){
-	    	    @Override
-	    	    public void menuSelected(MenuItem selectedItem){
-	    	        UI.getCurrent().getNavigator().navigateTo(CampusView.NAME);
-	    	    }
-	    	});
-			administration.addItem("Departamentos", new Command(){
-	    	    @Override
-	    	    public void menuSelected(MenuItem selectedItem){
-	    	        UI.getCurrent().getNavigator().navigateTo(DepartamentoView.NAME);
-	    	    }
-	    	});
-			administration.addItem("Órgãos", new Command(){
-	    	    @Override
-	    	    public void menuSelected(MenuItem selectedItem){
-	    	        UI.getCurrent().getNavigator().navigateTo(OrgaoView.NAME);
-	    	    }
-	    	});
+			administration.addItem("Câmpus", (MenuItem selectedItem) -> {
+                            UI.getCurrent().getNavigator().navigateTo(CampusView.NAME);
+                        });
+			administration.addItem("Departamentos", (MenuItem selectedItem) -> {
+                            UI.getCurrent().getNavigator().navigateTo(DepartamentoView.NAME);
+                        });
+			administration.addItem("Órgãos", (MenuItem selectedItem) -> {
+                            UI.getCurrent().getNavigator().navigateTo(OrgaoView.NAME);
+                        });
 			administration.addSeparator();
-    		administration.addItem("Usuários", new Command(){
-        	    @Override
-        	    public void menuSelected(MenuItem selectedItem){
-        	        UI.getCurrent().getNavigator().navigateTo(UsuarioView.NAME);
-        	    }
-        	});
 		}
 		
 		MenuItem account = this.menu.addItem("Minha Conta", null);
-    	account.addItem("Meus Dados", new Command(){
-    	    @Override
-    	    public void menuSelected(MenuItem selectedItem){
-    	    	UI.getCurrent().addWindow(new EditarUsuarioWindow(Session.getUsuario(), null));
-    	    }
-    	});
+    	account.addItem("Meus Dados", (MenuItem selectedItem) -> {
+            UI.getCurrent().addWindow(new EditarUsuarioWindow(Session.getUsuario(), null));
+        });
 		account.addSeparator();
     	if((Session.getUsuario() != null) && Session.getUsuario().isExterno()){
-    		account.addItem("Alterar Senha", new Command(){
-        	    @Override
-        	    public void menuSelected(MenuItem selectedItem){
-        	    	UI.getCurrent().addWindow(new EditarSenhaWindow());
-        	    }
-        	});
+    		account.addItem("Alterar Senha", (MenuItem selectedItem) -> {
+                    UI.getCurrent().addWindow(new EditarSenhaWindow());
+                });
     		account.addSeparator();
     	}
-    	account.addItem("Logoff", new Command(){
-    	    @Override
-    	    public void menuSelected(MenuItem selectedItem){
-    	        logoff();
-    	    }
-    	});
+    	account.addItem("Logoff", (MenuItem selectedItem) -> {
+            logoff();
+        });
     	
     	MenuItem help = this.menu.addItem("", new ThemeResource("images/help.png"), null);
     	/*help.addItem("Reportar Erro", new Command(){
@@ -124,12 +89,9 @@ public class MenuBar extends CustomComponent {
     	    }
     	});
     	help.addSeparator();*/
-    	help.addItem("Sobre o Sistema", new Command(){
-    	    @Override
-    	    public void menuSelected(MenuItem selectedItem){
-    	    	UI.getCurrent().addWindow(new SobreWindow());
-    	    }
-    	});
+    	help.addItem("Sobre o Sistema", (MenuItem selectedItem) -> {
+            UI.getCurrent().addWindow(new SobreWindow());
+        });
     	
     	this.setCompositionRoot(layout);
 	}

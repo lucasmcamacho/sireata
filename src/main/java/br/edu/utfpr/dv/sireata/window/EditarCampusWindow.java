@@ -24,6 +24,9 @@ import com.vaadin.ui.Upload.SucceededListener;
 import br.edu.utfpr.dv.sireata.bo.CampusBO;
 import br.edu.utfpr.dv.sireata.model.Campus;
 import br.edu.utfpr.dv.sireata.view.ListView;
+import com.vaadin.ui.Component;
+import java.util.Arrays;
+import java.util.List;
 
 public class EditarCampusWindow extends EditarWindow {
 	
@@ -69,10 +72,8 @@ public class EditarCampusWindow extends EditarWindow {
 		this.imLogo.setWidth("400px");
 		this.imLogo.setHeight("200px");
 		
-		this.adicionarCampo(new HorizontalLayout(this.tfNome, this.cbAtivo));
-		this.adicionarCampo(this.tfEndereco);
-		this.adicionarCampo(this.tfSite);
-		this.adicionarCampo(new HorizontalLayout(this.upLogo, this.imLogo));
+                List<Component> componentList = Arrays.asList( this.tfEndereco, this.tfSite, new HorizontalLayout(this.tfNome, this.cbAtivo), new HorizontalLayout(this.upLogo, this.imLogo) );   
+		this.addCampo(componentList);	
 		
 		this.carregarCampus();
 		this.tfNome.focus();

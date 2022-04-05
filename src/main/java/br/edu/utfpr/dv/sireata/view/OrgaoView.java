@@ -28,15 +28,12 @@ public class OrgaoView extends ListView {
 		
 		this.cbDepartamento = new ComboDepartamento(this.cbCampus.getCampus().getIdCampus(), TipoFiltro.NENHUM);
 		
-		this.cbCampus.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				cbDepartamento.setIdCampus(cbCampus.getCampus().getIdCampus());
-			}
-		});
+		this.cbCampus.addValueChangeListener((ValueChangeEvent event) -> {
+                    cbDepartamento.setIdCampus(cbCampus.getCampus().getIdCampus());
+                });
 		
-		this.adicionarCampoFiltro(this.cbCampus);
-		this.adicionarCampoFiltro(this.cbDepartamento);
+		this.addCampoFiltro(this.cbCampus);
+		this.addCampoFiltro(this.cbDepartamento);
 		
 		this.setBotaoExcluirVisivel(false);
 	}

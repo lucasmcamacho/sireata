@@ -17,16 +17,23 @@ import br.edu.utfpr.dv.sireata.bo.ComentarioBO;
 import br.edu.utfpr.dv.sireata.bo.PautaBO;
 import br.edu.utfpr.dv.sireata.model.Comentario;
 import br.edu.utfpr.dv.sireata.model.Pauta;
+import com.vaadin.ui.Component;
+import java.util.Arrays;
+import java.util.List;
 
 public class EditarPautaWindow extends EditarWindow {
 	
 	private final Pauta pauta;
 	private final EditarAtaWindow parentWindow;
 	
-	private final TextField tfTitulo;
-	private final TextArea taDescricao;
-	private final Button btComentarios;
-	private final Button btComentar;
+	private final TextField tfTitulo = new TextField("Ponto de Pauta");
+	private final TextArea taDescricao = new TextArea("Discussão sobre o Ponto");
+	private final Button btComentarios = new Button("Comentários", (ClickEvent event) -> {
+                    visualizarComentarios();
+                });
+	private final Button btComentar = new Button("Incluir Comentário", (ClickEvent event) -> {
+                    incluirComentario();
+                });
 	
 	public EditarPautaWindow(Pauta pauta, boolean aceitarComentarios, boolean permiteSalvar, EditarAtaWindow parentWindow){
 		super("Editar Pauta", null);
@@ -39,38 +46,24 @@ public class EditarPautaWindow extends EditarWindow {
 		
 		this.parentWindow = parentWindow;
 		
-		this.tfTitulo = new TextField("Ponto de Pauta");
 		this.tfTitulo.setWidth("800px");
 		
-		this.taDescricao = new TextArea("Discussão sobre o Ponto");
 		this.taDescricao.setWidth("800px");
 		this.taDescricao.setHeight("300px");
 		
-		this.btComentarios = new Button("Comentários", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	visualizarComentarios();
-            }
-        });
 		this.btComentarios.setWidth("150px");
 		
-		this.btComentar = new Button("Incluir Comentário", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	incluirComentario();
-            }
-        });
 		this.btComentar.setIcon(FontAwesome.PLUS);
 		this.btComentar.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		
-		this.adicionarCampo(this.tfTitulo);
-		this.adicionarCampo(this.taDescricao);
+                List<Component> componentList = Arrays.asList( this.tfTitulo, this.taDescricao );   
+		this.addCampo(componentList);
 		
 		if(this.pauta.getIdPauta() > 0){
-			this.adicionarBotao(this.btComentarios);
+			this.adicionarBotao(Arrays.asList(this.btComentarios));
 			
 			if(aceitarComentarios){
-				this.adicionarBotao(this.btComentar);	
+				this.adicionarBotao(Arrays.asList(this.btComentar));	
 			}
 		}
 		

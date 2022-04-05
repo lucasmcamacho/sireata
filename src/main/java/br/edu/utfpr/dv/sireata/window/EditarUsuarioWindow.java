@@ -4,7 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
@@ -16,6 +15,7 @@ import br.edu.utfpr.dv.sireata.bo.UsuarioBO;
 import br.edu.utfpr.dv.sireata.model.Usuario;
 import br.edu.utfpr.dv.sireata.util.StringUtils;
 import br.edu.utfpr.dv.sireata.view.ListView;
+import java.util.Arrays;
 
 public class EditarUsuarioWindow extends EditarWindow {
 	
@@ -50,23 +50,20 @@ public class EditarUsuarioWindow extends EditarWindow {
 		this.tfEmail.setMaxLength(100);
 		
 		this.cbExterno = new CheckBox("Usuário externo");
-		this.cbExterno.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				configurarUsuarioExterno(cbExterno.getValue());
-			}
-		});
+		this.cbExterno.addValueChangeListener((ValueChangeEvent event) -> {
+                    configurarUsuarioExterno(cbExterno.getValue());
+                });
 		
 		this.cbAtivo = new CheckBox("Ativo");
 		
 		this.cbAdministrador = new CheckBox("Administrador");
 		
 		if(Session.isAdministrador()){
-			this.adicionarCampo(new HorizontalLayout(this.tfLogin, new VerticalLayout(this.cbAtivo, this.cbExterno, this.cbAdministrador)));	
+			this.addCampo(Arrays.asList( new HorizontalLayout(this.tfLogin, new VerticalLayout(this.cbAtivo, this.cbExterno, this.cbAdministrador)) ));	
 		}else{
 			this.tfNome.setEnabled(false);
 		}
-		this.adicionarCampo(new HorizontalLayout(this.tfNome, this.tfEmail));
+		this.addCampo(Arrays.asList( new HorizontalLayout(this.tfNome, this.tfEmail) ));
 		
 		this.carregarUsuario();
 		this.tfLogin.focus();

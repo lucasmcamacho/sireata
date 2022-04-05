@@ -38,12 +38,9 @@ public class ListarComentariosWindow extends Window {
 		this.gridComentarios.getColumns().get(1).setWidth(100);
 		this.gridComentarios.setHeight("300px");
 		
-		this.btVisualizar = new Button("Visualizar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	visualizarComentario();
-            }
-        });
+		this.btVisualizar = new Button("Visualizar", (ClickEvent event) -> {
+                    visualizarComentario();
+                });
 		this.btVisualizar.setIcon(FontAwesome.SEARCH);
 		this.btVisualizar.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		this.btVisualizar.setWidth("150px");

@@ -22,7 +22,7 @@ public class DepartamentoView extends ListView {
 	public DepartamentoView(){
 		this.cbCampus = new ComboCampus(TipoFiltro.NENHUM);
 		
-		this.adicionarCampoFiltro(this.cbCampus);
+		this.addCampoFiltro(this.cbCampus);
 		
 		this.setBotaoExcluirVisivel(false);
 	}

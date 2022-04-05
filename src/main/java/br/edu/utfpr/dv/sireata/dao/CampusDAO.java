@@ -32,12 +32,7 @@ public class CampusDAO {
 				return null;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -60,12 +55,7 @@ public class CampusDAO {
 				return null;
 			}
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -88,12 +78,7 @@ public class CampusDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -120,12 +105,7 @@ public class CampusDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -154,12 +134,7 @@ public class CampusDAO {
 			
 			return list;
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -204,12 +179,7 @@ public class CampusDAO {
 			
 			return campus.getIdCampus();
 		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+			verifyFinally(conn, stmt, rs);
 		}
 	}
 	
@@ -225,5 +195,14 @@ public class CampusDAO {
 		
 		return campus;
 	}
+        
+        public void verifyFinally(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
+            if((rs != null) && !rs.isClosed())
+                rs.close();
+            if((stmt != null) && !stmt.isClosed())
+                 stmt.close();
+            if((conn != null) && !conn.isClosed())
+                 conn.close();
+        }
 
 }

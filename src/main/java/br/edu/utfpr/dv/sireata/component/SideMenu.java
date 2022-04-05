@@ -10,7 +10,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -33,7 +32,6 @@ public class SideMenu extends CustomComponent {
 	public static final String ID = "dashboard-menu";
     public static final String REPORTS_BADGE_ID = "dashboard-menu-reports-badge";
     public static final String NOTIFICATIONS_BADGE_ID = "dashboard-menu-notifications-badge";
-    private static final String STYLE_VISIBLE = "valo-menu-visible";
     
     private MenuItem settingsItem;
 	private Accordion accordionMenu;
@@ -75,26 +73,17 @@ public class SideMenu extends CustomComponent {
         settingsItem = settings.addItem("", new ThemeResource("images/profile-pic-300px.jpg"), null);
         settingsItem.setText(usuario.getNome());
         
-        settingsItem.addItem("Meus Dados", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-            	UI.getCurrent().addWindow(new EditarUsuarioWindow(usuario, null));
-            }
+        settingsItem.addItem("Meus Dados", (final MenuItem selectedItem) -> {
+            UI.getCurrent().addWindow(new EditarUsuarioWindow(usuario, null));
         });
         if((Session.getUsuario() != null) && Session.getUsuario().isExterno()){
-	        settingsItem.addItem("Alterar Senha", new Command() {
-	            @Override
-	            public void menuSelected(final MenuItem selectedItem) {
-	            	UI.getCurrent().addWindow(new EditarSenhaWindow());
-	            }
-	        });
+	        settingsItem.addItem("Alterar Senha", (final MenuItem selectedItem) -> {
+                    UI.getCurrent().addWindow(new EditarSenhaWindow());
+                });
         }
         settingsItem.addSeparator();
-        settingsItem.addItem("Logoff", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-                logoff();
-            }
+        settingsItem.addItem("Logoff", (final MenuItem selectedItem) -> {
+            logoff();
         });
         
         return settings;

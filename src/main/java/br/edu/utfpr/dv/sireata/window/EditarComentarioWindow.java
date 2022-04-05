@@ -13,6 +13,10 @@ import br.edu.utfpr.dv.sireata.bo.ComentarioBO;
 import br.edu.utfpr.dv.sireata.model.Ata;
 import br.edu.utfpr.dv.sireata.model.Comentario;
 import br.edu.utfpr.dv.sireata.model.Comentario.SituacaoComentario;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
+import java.util.Arrays;
+import java.util.List;
 
 public class EditarComentarioWindow extends EditarWindow {
 	
@@ -56,10 +60,8 @@ public class EditarComentarioWindow extends EditarWindow {
 		this.taMotivo.setWidth("800px");
 		this.taMotivo.setHeight("150px");
 		
-		this.adicionarCampo(this.cbSituacao);
-		this.adicionarCampo(this.taComentarios);
-		this.adicionarCampo(this.cbSituacaoComentarios);
-		this.adicionarCampo(this.taMotivo);
+                List<Component> componentList = Arrays.asList( this.cbSituacao, this.taComentarios, this.cbSituacaoComentarios, this.taMotivo );   
+		this.addCampo(componentList);
 		
 		this.carregarComentario();
 	}

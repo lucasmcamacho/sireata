@@ -24,7 +24,7 @@ public class CampusService {
 	public Response listar() {
 		try {
 			List<Campus> list = new CampusBO().listarTodos(true);
-			List<CampusJson> ret = new ArrayList<CampusJson>();
+			List<CampusJson> ret = new ArrayList<>();
 			
 			for(Campus c : list) {
 				CampusJson campus = new CampusJson();

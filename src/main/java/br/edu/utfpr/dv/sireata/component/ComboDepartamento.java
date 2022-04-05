@@ -45,11 +45,11 @@ public class ComboDepartamento extends NativeSelect {
 	}
 	
 	public Departamento getDepartamento(){
-		if(this.getValue() == null){
-			return new Departamento();
-		}else{
-			return (Departamento)this.getValue();	
-		}
+		if(this.getValue() == null)
+                    return new Departamento();
+		else
+                    return (Departamento)this.getValue();	
+		
 	}
 	
 	public void setDepartamento(Departamento c){
@@ -90,19 +90,25 @@ public class ComboDepartamento extends NativeSelect {
 			if(this.getIdCampus() != 0){
 				DepartamentoBO bo = new DepartamentoBO();
 				
-				if(this.getTipoFiltro() == TipoFiltro.CRIARATA){
-					this.list = bo.listarParaCriacaoAta(this.getIdCampus(), Session.getUsuario().getIdUsuario());
-				}else if(this.getTipoFiltro() == TipoFiltro.CONSULTARATA){
-					this.list = bo.listarParaConsultaAtas(this.getIdCampus(), Session.getUsuario().getIdUsuario());
-				}else{
-					this.list = bo.listarPorCampus(this.getIdCampus(), true);
-				}
+                                switch(this.getTipoFiltro()) {
+                                    case CRIARATA: {
+                                        this.list = bo.listarParaCriacaoAta(this.getIdCampus(), Session.getUsuario().getIdUsuario());
+                                        break;
+                                    }
+                                    case CONSULTARATA: {
+                                        this.list = bo.listarParaConsultaAtas(this.getIdCampus(), Session.getUsuario().getIdUsuario());
+                                        break;
+                                    }
+                                    default: {
+                                            this.list = bo.listarPorCampus(this.getIdCampus(), true);
+                                        break;
+                                    }
+                                }                                
 				
 				this.addItems(this.list);
 				
-				if(this.list.size() > 0){
-					this.setDepartamento(this.list.get(0));
-				}
+				if(!this.list.isEmpty())
+                                    this.setDepartamento(this.list.get(0));
 			}
 		} catch (Exception e) {
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);

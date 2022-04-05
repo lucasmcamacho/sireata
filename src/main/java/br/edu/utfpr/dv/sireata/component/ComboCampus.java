@@ -86,20 +86,26 @@ public class ComboCampus extends NativeSelect {
 		try {
 			CampusBO bo = new CampusBO();
 			
-			if(this.getTipoFiltro() == TipoFiltro.CRIARATA){
-				this.list = bo.listarParaCriacaoAta(Session.getUsuario().getIdUsuario());
-			}else if(this.getTipoFiltro() == TipoFiltro.CONSULTARATA){
-				this.list = bo.listarParaConsultaAtas(Session.getUsuario().getIdUsuario());
-			}else{
-				this.list = bo.listarTodos(this.isFiltrarSomenteAtivos());
-			}
-			
+                        switch(this.getTipoFiltro()) {
+                            case CRIARATA: {
+                                this.list = bo.listarParaCriacaoAta(Session.getUsuario().getIdUsuario());
+                                break;
+                            }
+                            case CONSULTARATA: {
+                                this.list = bo.listarParaConsultaAtas(Session.getUsuario().getIdUsuario());
+                                break;
+                            }
+                            default: {
+                                this.list = bo.listarTodos(this.isFiltrarSomenteAtivos());
+                                break;
+                            }
+                        }    
+
 			this.removeAllItems();
 			this.addItems(this.list);
 			
-			if(this.list.size() > 0){
-				this.setCampus(this.list.get(0));
-			}
+			if(!this.list.isEmpty())
+                            this.setCampus(this.list.get(0));
 		} catch (Exception e) {
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 		}

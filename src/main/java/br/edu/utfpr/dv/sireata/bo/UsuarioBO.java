@@ -61,23 +61,7 @@ public class UsuarioBO {
 			
 			throw new Exception(e.getMessage());
 		}
-	}
-	
-	private boolean loginEAluno(String login){
-		if(login.toLowerCase().startsWith("a")){
-			login = login.substring(1);
-			
-			try{
-				Integer.parseInt(login);
-				
-				return true;
-			}catch(Exception e){
-				return false;
-			}
-		}
-		
-		return false;
-	}
+	}	
 	
 	public Usuario buscarPorLogin(String login) throws Exception{
 		try {
@@ -217,7 +201,7 @@ public class UsuarioBO {
 	
 	private String formatarNome(String nome){
 		String[] list = nome.trim().split(" ");
-		List<String> list2 = new ArrayList<String>();
+		List<String> list2 = new ArrayList<>();
 		
 		for(String s : list){
 			if(s.length() > 2){

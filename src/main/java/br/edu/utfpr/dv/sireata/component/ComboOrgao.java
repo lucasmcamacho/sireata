@@ -89,18 +89,25 @@ public class ComboOrgao extends NativeSelect {
 			
 			if(this.getIdDepartamento() != 0){
 				OrgaoBO bo = new OrgaoBO();
-				
-				if(this.getTipoFiltro() == TipoFiltro.CRIARATA){
-					this.list = bo.listarParaCriacaoAta(this.getIdDepartamento(), Session.getUsuario().getIdUsuario());
-				}else if(this.getTipoFiltro() == TipoFiltro.CONSULTARATA){
-					this.list = bo.listarParaConsultaAtas(this.getIdDepartamento(), Session.getUsuario().getIdUsuario());
-				}else{
-					this.list = bo.listarPorDepartamento(this.getIdDepartamento());
-				}
+                                
+                                switch(this.getTipoFiltro()) {
+                                    case CRIARATA: {
+                                        this.list = bo.listarParaCriacaoAta(this.getIdDepartamento(), Session.getUsuario().getIdUsuario());
+                                        break;
+                                    }
+                                    case CONSULTARATA: {
+                                        this.list = bo.listarParaConsultaAtas(this.getIdDepartamento(), Session.getUsuario().getIdUsuario());
+                                        break;
+                                    }
+                                    default: {
+                                        this.list = bo.listarPorDepartamento(this.getIdDepartamento());
+                                        break;
+                                    }
+                                }
 				
 				this.addItems(this.list);
 				
-				if(this.list.size() > 0){
+				if(!this.list.isEmpty()){
 					this.setOrgao(this.list.get(0));
 				}
 			}

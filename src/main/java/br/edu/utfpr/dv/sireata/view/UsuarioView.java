@@ -35,7 +35,7 @@ public class UsuarioView extends ListView {
 		VerticalLayout vl = new VerticalLayout(this.cbAtivo, this.cbExterno);
 		vl.setSpacing(true);
 		
-		this.adicionarCampoFiltro(new HorizontalLayout(this.tfNome, vl));
+		this.addCampoFiltro(new HorizontalLayout(this.tfNome, vl));
 		
 		this.setBotaoExcluirVisivel(false);
 	}

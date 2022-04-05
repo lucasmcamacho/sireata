@@ -71,12 +71,9 @@ public class LoginView extends CustomComponent implements View {
     	this.password.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
     	this.password.setIcon(FontAwesome.LOCK);
         
-    	this.loginButton = new Button("Login", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	login();
-            }
-        });
+    	this.loginButton = new Button("Login", (ClickEvent event) -> {
+            login();
+            });
     	this.loginButton.setWidth("300px");
     	this.loginButton.setClickShortcut(KeyCode.ENTER);
         

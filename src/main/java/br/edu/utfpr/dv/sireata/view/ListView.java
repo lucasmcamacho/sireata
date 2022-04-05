@@ -46,41 +46,29 @@ public abstract class ListView extends BasicView {
     	this.grid.setSelectionMode(SelectionMode.SINGLE);
 		((SingleSelectionModel)this.grid.getSelectionModel()).setDeselectAllowed(false);
 		this.grid.setSizeFull();
-		this.grid.addItemClickListener(new ItemClickListener() {
-			@Override
-			public void itemClick(ItemClickEvent event) {
-				if(event.isDoubleClick() && isBotaoEditarVisivel()){
-					editar();
-				}
-			}
-		});
+		this.grid.addItemClickListener((ItemClickEvent event) -> {
+                    if(event.isDoubleClick() && isBotaoEditarVisivel()){
+                        editar();
+                    }
+            });
 		
-		this.btAdicionar = new Button("Adicionar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	adicionar();
-            }
-        });
+		this.btAdicionar = new Button("Adicionar", (ClickEvent event) -> {
+                    adicionar();
+            });
 		this.btAdicionar.setIcon(FontAwesome.PLUS);
 		this.btAdicionar.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		this.btAdicionar.setWidth("150px");
 		
-		this.btEditar = new Button("Editar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	editar();
-            }
-        });
+		this.btEditar = new Button("Editar", (ClickEvent event) -> {
+                    editar();
+            });
 		this.btEditar.setIcon(FontAwesome.EDIT);
 		this.btEditar.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		this.btEditar.setWidth("150px");
 		
-		this.btExcluir = new Button("Excluir", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	excluir();
-            }
-        });
+		this.btExcluir = new Button("Excluir", (ClickEvent event) -> {
+                    excluir();
+            });
 		this.btExcluir.setIcon(FontAwesome.TRASH);
 		this.btExcluir.addStyleName(ValoTheme.BUTTON_DANGER);
 		this.btExcluir.setWidth("150px");
@@ -90,20 +78,17 @@ public abstract class ListView extends BasicView {
 		this.vlBotoes.setMargin(true);
 		this.vlBotoes.setSizeFull();
 		
-		this.btFiltrar = new Button("Filtrar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	try{
-            		filtrar();
-            		
-            		atualizarGrid();
-            	}catch(Exception e){
-            		Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-            		
-            		Notification.show("Filtrar", e.getMessage(), Notification.Type.ERROR_MESSAGE);
-            	}
-            }
-        });
+		this.btFiltrar = new Button("Filtrar", (ClickEvent event) -> {
+                    try{
+                        filtrar();
+                        
+                        atualizarGrid();
+                    }catch(Exception e){
+                        Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+                        
+                        Notification.show("Filtrar", e.getMessage(), Notification.Type.ERROR_MESSAGE);
+                    }
+            });
 		this.btFiltrar.setIcon(FontAwesome.FILTER);
 		this.btFiltrar.setWidth("150px");
 		
@@ -147,7 +132,7 @@ public abstract class ListView extends BasicView {
     	this.hlGrid.setExpandRatio(this.grid, 1);
     }
     
-    public void adicionarCampoFiltro(Component c){
+    public void addCampoFiltro(Component c){
     	if(c instanceof HorizontalLayout){
 			((HorizontalLayout)c).setSpacing(true);
 		}else if(c instanceof VerticalLayout){
@@ -255,13 +240,11 @@ public abstract class ListView extends BasicView {
     	if(value == null){
     		Notification.show("Selecionar Registro", "Selecione o registro para exclusão.", Notification.Type.WARNING_MESSAGE);
     	}else{
-    		ConfirmDialog.show(UI.getCurrent(), "Confirma a exclusão do registro?", new ConfirmDialog.Listener() {
-                public void onClose(ConfirmDialog dialog) {
+    		ConfirmDialog.show(UI.getCurrent(), "Confirma a exclusão do registro?", (ConfirmDialog dialog) -> {
                     if (dialog.isConfirmed()) {
-                    	excluir(value);
+                        excluir(value);
                     }
-                }
-            });
+                    });
     	}
     }
     

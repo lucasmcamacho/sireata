@@ -19,12 +19,9 @@ public class SobreWindow extends Window {
 	public SobreWindow(){
 		this.setCaption("Sobre ...");
 		
-		this.botaoFechar = new Button("Fechar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            	close();
-            }
-        });
+		this.botaoFechar = new Button("Fechar", (ClickEvent event) -> {
+                    close();
+                });
 		this.botaoFechar.setWidth("150px");
 		
 		this.layoutCampos = new VerticalLayout();

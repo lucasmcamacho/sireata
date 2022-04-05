@@ -1,7 +1,6 @@
 package br.edu.utfpr.dv.sireata.component;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -14,12 +13,9 @@ public class MenuEntry extends HorizontalLayout {
 	public MenuEntry(String caption, int level, String navigateTo){
 		Link label = new Link(caption, null);
 		
-		this.addLayoutClickListener(new LayoutClickListener() {            
-			@Override
-	        	public void layoutClick(LayoutClickEvent event) {
-					UI.getCurrent().getNavigator().navigateTo(navigateTo);
-	            }
-		});
+		this.addLayoutClickListener((LayoutClickEvent event) -> {
+                    UI.getCurrent().getNavigator().navigateTo(navigateTo);
+                });
 		
 		this.addLabel(label, level);
 	}
@@ -33,12 +29,9 @@ public class MenuEntry extends HorizontalLayout {
 	public MenuEntry(String caption, int level, Window window){
 		Link label = new Link(caption, null);
 		
-		this.addLayoutClickListener(new LayoutClickListener() {            
-			@Override
-	        	public void layoutClick(LayoutClickEvent event) {
-					UI.getCurrent().addWindow(window);
-	            }
-		});
+		this.addLayoutClickListener((LayoutClickEvent event) -> {
+                    UI.getCurrent().addWindow(window);
+                });
 		
 		this.addLabel(label, level);
 	}
@@ -46,12 +39,9 @@ public class MenuEntry extends HorizontalLayout {
 	public MenuEntry(String caption, int level, MenuEntryClickListener clickListener){
 		Link label = new Link(caption, null);
 		
-		this.addLayoutClickListener(new LayoutClickListener() {            
-			@Override
-	        	public void layoutClick(LayoutClickEvent event) {
-					clickListener.menuClick();
-	            }
-		});
+		this.addLayoutClickListener((LayoutClickEvent event) -> {
+                    clickListener.menuClick();
+                });
 		
 		this.addLabel(label, level);
 	}
