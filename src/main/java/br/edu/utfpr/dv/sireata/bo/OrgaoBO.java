@@ -143,19 +143,15 @@ public class OrgaoBO {
 			throw new Exception("Selecione o secretário");
 		}
 		
-		boolean encontrou = false;
+		boolean encontrou;
 		
 		for(OrgaoMembro u : orgao.getMembros()){
-			if(u.getUsuario().getIdUsuario() == orgao.getPresidente().getIdUsuario()){
-				encontrou = true;
-				break;
-			}
-		}
-		if(!encontrou){
-			OrgaoMembro membro = new OrgaoMembro();
-			membro.setUsuario(orgao.getPresidente());
-			membro.setDesignacao("coordenador");
-			orgao.getMembros().add(membro);
+			encontrou = encontrarOrgao(orgao, u);
+                   if(encontrou == true){
+                       break;
+                   }
+                   else{
+                       criarOrgao(orgao);
 		}
 		
 		try{
@@ -168,5 +164,26 @@ public class OrgaoBO {
 			throw new Exception(e.getMessage());
 		}
 	}
+            return 0;
 
-}
+    }
+
+        public boolean encontrarOrgao(Orgao orgao , OrgaoMembro u){
+
+			if(u.getUsuario().getIdUsuario() == orgao.getPresidente().getIdUsuario()){
+				return true;		
+                        }
+                        else{
+                            return false;
+                        }
+
+            }
+
+        public void criarOrgao(Orgao orgao){
+            OrgaoMembro membro = new OrgaoMembro();
+			membro.setUsuario(orgao.getPresidente());
+			membro.setDesignacao("coordenador");
+			orgao.getMembros().add(membro); 
+        }
+
+  }
