@@ -409,16 +409,8 @@ public class AtaDAO {
 				stmt = conn.prepareStatement("UPDATE atas SET idOrgao=?, idPresidente=?, idSecretario=?, tipo=?, numero=?, data=?, local=?, localCompleto=?, dataLimiteComentarios=?, consideracoesIniciais=?, audio=? WHERE idAta=?");
 			}
 			
-			stmt.setInt(1, ata.getOrgao().getIdOrgao());
-			stmt.setInt(2, ata.getPresidente().getIdUsuario());
-			stmt.setInt(3, ata.getSecretario().getIdUsuario());
-			stmt.setInt(4, ata.getTipo().getValue());
-			stmt.setInt(5, ata.getNumero());
-			stmt.setTimestamp(6, new java.sql.Timestamp(ata.getData().getTime()));
-			stmt.setString(7, ata.getLocal());
-			stmt.setString(8, ata.getLocalCompleto());
-			stmt.setDate(9, new java.sql.Date(ata.getDataLimiteComentarios().getTime()));
-			stmt.setString(10, ata.getConsideracoesIniciais());
+			SetAta(stmt, ata);
+                        
 			if(ata.getAudio() == null){
 				stmt.setNull(11, Types.BINARY);
 			}else{
@@ -623,6 +615,23 @@ public class AtaDAO {
 			conn.setAutoCommit(true);
 			verifyFinally(conn, stmt, null);
 		}
+	}
+        
+        public void SetAta(PreparedStatement stmt, Ata ata) {
+		try {
+			stmt.setInt(2, ata.getPresidente().getIdUsuario());
+			stmt.setInt(3, ata.getSecretario().getIdUsuario());
+			stmt.setInt(4, ata.getTipo().getValue());
+			stmt.setInt(5, ata.getNumero());
+			stmt.setTimestamp(6, new java.sql.Timestamp(ata.getData().getTime()));
+			stmt.setString(7, ata.getLocal());
+			stmt.setString(8, ata.getLocalCompleto());
+			stmt.setDate(9, new java.sql.Date(ata.getDataLimiteComentarios().getTime()));
+			stmt.setString(10, ata.getConsideracoesIniciais());
+		} catch (SQLException ex) {
+
+		}
+
 	}
         
         public void verifyFinally(Connection conn, Statement stmt, ResultSet rs) throws SQLException{
